@@ -7,12 +7,21 @@ int main(void)
 
    p = zm_malloc(sizeof(int));
 
-   if(p == NULL)
-     printf("pass¥n");
+   if(p != NULL)
+     printf("pass\n");
    else
-     printf("fail¥n");
+     printf("fail\n");
+
+   *p = 1;
+
+   if(*p == 1)
+     printf("pass\n");
+   else
+     printf("fail\n");
 
    zm_free(p);
+   p = NULL;
+
    return 0;
 }
 
