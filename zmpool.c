@@ -1,11 +1,20 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-unsigned char zm_pool[4];
+#include "zmpool.h"
+#include "zmpool_i.h"
+
+unsigned char zm_pool[POOL_BLOCK_SIZE * POOL_SIZE];
 
 void *zm_malloc(size_t size)
 {
-    return zm_pool;
+    static uint32_t used = 0;
+    void *p = NULL;
+
+    if(used < POOL_SIZE)
+        p = (void *) &zm_pool[used++ * POOL_BLOCK_SIZE];
+
+    return p;
 }
 
 void zm_free(void *ptr)
