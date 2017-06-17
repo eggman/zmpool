@@ -46,9 +46,14 @@ void *zm_malloc(size_t size)
 
 void zm_free(void *ptr)
 {
-    uint32_t i = ((void *)ptr - (void *)zm_pool)/POOL_BLOCK_SIZE;
+    uint64_t i;
 
-    if(ptr == &zm_pool[i * POOL_BLOCK_SIZE] &&
+    if( ptr < (void *) zm_pool || (void *) &zm_pool[POOL_SIZE*POOL_BLOCK_SIZE -1] < ptr)
+       return;
+
+    i = ((uint64_t) ptr - (uint64_t) zm_pool) / POOL_BLOCK_SIZE;
+
+    if(i < POOL_SIZE &&
        blocks[i])
     {
         blocks[i] = ZERO;
