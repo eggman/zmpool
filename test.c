@@ -53,7 +53,7 @@ int main(void)
     p = zm_malloc(POOL_BLOCK_SIZE + 1);
     is_null(p);
 
-    for(uint32_t i=1; i<POOL_SIZE; i++)
+    for(uint32_t i=1; i<2*POOL_SIZE; i++)
     {
         p = zm_malloc(sizeof(int));
         zm_free((uint8_t *)p + 3);
